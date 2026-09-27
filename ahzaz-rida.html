@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ahzaz &amp; Rida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose-deep:#7A1B33;
+    --rose-mid:#C43C56;
+    --pink-soft:#F0A9B6;
+    --blush:#FFF3EF;
+    --gold:#B8894C;
+    --ink:#3A1220;
+    --paper:#FFFBF8;
+    --shadow-soft: rgba(122,27,51,0.18);
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior:smooth;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--blush);
+    color:var(--ink);
+    font-family:'Poppins', sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:64px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --blush:#241014;
+      --paper:#2B1319;
+      --ink:#F6E3E8;
+      --shadow-soft: rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --blush:#241014;
+    --paper:#2B1319;
+    --ink:#F6E3E8;
+    --shadow-soft: rgba(0,0,0,0.4);
+  }
+
+  ::selection{ background:var(--rose-mid); color:#fff; }
+
+  /* ---------- Ambient floating hearts ---------- */
+  .petals{
+    position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;
+  }
+  .petal{
+    position:absolute;
+    bottom:-40px;
+    width:14px; height:14px;
+    opacity:0.55;
+    animation: float-up linear infinite;
+  }
+  .petal svg{ width:100%; height:100%; display:block; }
+  @keyframes float-up{
+    0%{ transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    10%{ opacity:0.6; }
+    90%{ opacity:0.4; }
+    100%{ transform:translateY(-110vh) translateX(var(--drift,20px)) rotate(200deg); opacity:0; }
+  }
+
+  section{ position:relative; z-index:2; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:100vh;
+    height:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:8vh 6vw 6vh;
+  }
+  .hero .eyebrow{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:clamp(1rem, 2.4vw, 1.35rem);
+    color:var(--rose-mid);
+    letter-spacing:0.02em;
+    margin-bottom:0.6rem;
+    opacity:0;
+    animation: rise 1s ease-out 0.2s forwards;
+  }
+  .hero h1{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:clamp(2.6rem, 9vw, 5.4rem);
+    line-height:1.05;
+    margin:0;
+    color:var(--rose-deep);
+    display:flex; align-items:center; gap:0.35em; flex-wrap:wrap; justify-content:center;
+  }
+  .hero h1 span.name{
+    opacity:0;
+    animation: rise 1s ease-out forwards;
+  }
+  .hero h1 span.name.a{ animation-delay:0.5s; }
+  .hero h1 .amp{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:500;
+    color:var(--gold);
+    font-size:0.7em;
+    opacity:0;
+    animation: rise 1s ease-out 0.85s forwards;
+  }
+  .hero h1 span.name.r{ animation-delay:1.15s; }
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .hero p.tagline{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:clamp(1.05rem, 2.6vw, 1.4rem);
+    max-width:32ch;
+    line-height:1.6;
+    color:var(--ink);
+    margin-top:1.4rem;
+    opacity:0;
+    animation: rise 1s ease-out 1.5s forwards;
+  }
+  .scroll-cue{
+    margin-top:3rem;
+    width:1px; height:52px;
+    background:linear-gradient(var(--rose-mid), transparent);
+    position:relative;
+    opacity:0;
+    animation: rise 1s ease-out 2s forwards;
+  }
+  .scroll-cue::after{
+    content:"";
+    position:absolute; left:50%; top:0; transform:translateX(-50%);
+    width:6px; height:6px; border-radius:50%;
+    background:var(--rose-mid);
+    animation: drip 1.8s ease-in-out infinite;
+  }
+  @keyframes drip{
+    0%{ top:0; opacity:1; }
+    80%{ opacity:0.6; }
+    100%{ top:46px; opacity:0; }
+  }
+
+  /* ---------- Section shared ---------- */
+  .wrap{ max-width:760px; margin:0 auto; padding:14vh 7vw; }
+  .kicker{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    color:var(--rose-mid); font-size:1.15rem; margin-bottom:0.4rem; text-align:center;
+  }
+  h2.section-title{
+    font-family:'Playfair Display', serif; font-weight:600;
+    font-size:clamp(1.8rem, 4.6vw, 2.6rem);
+    color:var(--rose-deep);
+    text-align:center;
+    margin:0 0 3rem;
+  }
+
+  /* ---------- Envelope / Letter ---------- */
+  .envelope-stage{
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .envelope{
+    --w: min(320px, 70vw);
+    width:var(--w);
+    aspect-ratio: 3/2;
+    position:relative;
+    cursor:pointer;
+    filter: drop-shadow(0 18px 30px var(--shadow-soft));
+    transition: transform .4s ease;
+  }
+  .envelope:hover{ transform: translateY(-4px); }
+  .envelope .back{
+    position:absolute; inset:0;
+    background: linear-gradient(160deg, var(--rose-mid), var(--rose-deep));
+    border-radius:10px;
+  }
+  .envelope .letter-peek{
+    position:absolute;
+    left:8%; right:8%; top:-6%;
+    height:80%;
+    background:var(--paper);
+    border-radius:6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    transition: transform .6s cubic-bezier(.2,.7,.3,1);
+    transform: translateY(0%);
+    z-index:1;
+  }
+  .envelope.open .letter-peek{
+    transform: translateY(-58%);
+  }
+  .flap{
+    position:absolute; top:0; left:0; right:0; height:56%;
+    background: linear-gradient(160deg, var(--rose-deep), #5c1327);
+    clip-path: polygon(0 0, 100% 0, 50% 68%);
+    transform-origin:top;
+    transition: transform .5s ease;
+    z-index:3;
+    border-radius:10px 10px 0 0;
+  }
+  .envelope.open .flap{ transform: rotateX(180deg); }
+  .seal{
+    position:absolute; left:50%; top:34%; transform:translate(-50%,-50%);
+    width:46px; height:46px; border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, var(--gold), #8a6127);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 8px rgba(0,0,0,0.25);
+    z-index:4;
+    font-size:1.1rem; color:#fff8ea;
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .envelope.open .seal{ opacity:0; transform:translate(-50%,-50%) scale(0.5); }
+  .envelope-hint{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    margin-top:1.6rem; color:var(--rose-mid); font-size:1.05rem;
+    opacity:0.9;
+  }
+
+  .letter{
+    max-width:520px;
+    margin:2.5rem auto 0;
+    background:var(--paper);
+    border-radius:12px;
+    padding:2.6rem 2.4rem;
+    box-shadow: 0 16px 40px var(--shadow-soft);
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.18rem;
+    line-height:1.85;
+    color:var(--ink);
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition: max-height .8s ease, opacity .8s ease, margin .8s ease, padding .8s ease;
+  }
+  .letter.show{
+    max-height:900px;
+    opacity:1;
+  }
+  .letter p{ margin:0 0 1.1rem; }
+  .letter p:last-child{ margin-bottom:0; }
+  .letter .sign{
+    font-style:italic; color:var(--rose-mid); margin-top:1.4rem; display:block;
+  }
+
+  /* ---------- Reasons ---------- */
+  .reasons{ list-style:none; padding:0; margin:0; }
+  .reasons li{
+    padding:1.6rem 0;
+    border-bottom:1px solid var(--pink-soft);
+    display:flex; gap:1.1rem; align-items:flex-start;
+  }
+  .reasons li:last-child{ border-bottom:none; }
+  .reasons .mark{
+    font-family:'Playfair Display', serif;
+    color:var(--gold);
+    font-size:1.4rem;
+    line-height:1;
+    margin-top:0.15rem;
+  }
+  .reasons p{
+    margin:0;
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.2rem;
+    line-height:1.7;
+  }
+
+  /* ---------- Closing ---------- */
+  .closing{
+    text-align:center;
+    padding-bottom:16vh;
+  }
+  .heart-mark{
+    width:34px; height:34px; margin:0 auto 1.4rem;
+    color:var(--rose-mid);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.14); }
+  }
+  .closing blockquote{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(1.3rem, 3.4vw, 1.9rem);
+    color:var(--rose-deep);
+    max-width:26ch;
+    margin:0 auto 1.6rem;
+    line-height:1.4;
+  }
+  .closing .from{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    color:var(--ink);
+    font-size:1.15rem;
+  }
+
+  /* ---------- Handwritten note ---------- */
+  .note-paper{
+    position:relative;
+    max-width:560px;
+    margin:0 auto;
+    padding:3.2rem 2.4rem 2.4rem;
+    border-radius:4px;
+    background: repeating-linear-gradient(var(--paper), var(--paper) 38px, var(--pink-soft) 39px);
+    box-shadow: 0 16px 34px var(--shadow-soft);
+    transform: rotate(-1.1deg);
+  }
+  .note-paper .pin{
+    position:absolute; top:-11px; left:50%; transform:translateX(-50%);
+    width:20px; height:20px; border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, #f0c3cb, var(--rose-mid));
+    box-shadow: 0 3px 7px rgba(0,0,0,0.28);
+  }
+  .hw-line{
+    font-family:'Caveat', cursive;
+    font-size:1.75rem;
+    line-height:1.45;
+    color:var(--ink);
+    margin:0 0 0.5rem;
+  }
+  .hw-line.sign{
+    text-align:right;
+    color:var(--rose-mid);
+    font-size:1.9rem;
+    margin-top:0.8rem;
+  }
+
+  /* ---------- Love meter ---------- */
+  .meter-heart-wrap{
+    width:min(200px, 55vw);
+    margin:0 auto;
+  }
+  .meter-svg{ width:100%; display:block; overflow:visible; }
+  .heart-outline{ fill:none; stroke:var(--rose-mid); stroke-width:2.2; }
+  .heart-fill{ }
+
+  /* ---------- Surprise tap ---------- */
+  .surprise-btn{
+    background:transparent;
+    border:1.5px solid var(--rose-mid);
+    color:var(--rose-deep);
+    padding:0.75rem 1.7rem;
+    border-radius:999px;
+    font-size:0.95rem;
+    cursor:pointer;
+    transition: all .25s ease;
+  }
+  .surprise-btn:hover{ background:var(--rose-mid); color:#fff; transform:translateY(-2px); }
+  .surprise-card{
+    max-width:480px;
+    margin:1.8rem auto 0;
+    background:var(--paper);
+    border-radius:14px;
+    padding:1.9rem 1.7rem;
+    box-shadow:0 16px 32px var(--shadow-soft);
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.18rem;
+    line-height:1.75;
+    color:var(--ink);
+    opacity:0;
+    transform:translateY(10px) scale(0.98);
+    animation: reveal-card .6s ease forwards;
+  }
+  @keyframes reveal-card{ to{ opacity:1; transform:translateY(0) scale(1); } }
+
+  /* ---------- Quiz ---------- */
+  .quiz{ max-width:520px; margin:0 auto; }
+  .quiz-question{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.35rem;
+    text-align:center;
+    margin:0 0 1.4rem;
+    color:var(--rose-deep);
+  }
+  .quiz-options{ display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
+  .quiz-opt{
+    font-family:'Poppins', sans-serif;
+    font-size:0.92rem;
+    padding:0.85rem 0.6rem;
+    border-radius:12px;
+    border:1.5px solid var(--pink-soft);
+    background:var(--paper);
+    color:var(--ink);
+    cursor:pointer;
+    transition: all .22s ease;
+  }
+  .quiz-opt:hover:not(:disabled){ border-color:var(--rose-mid); transform:translateY(-2px); }
+  .quiz-opt.correct{ background:#e1f5e6; border-color:#4caf6d; color:#2c6b3f; }
+  .quiz-opt.wrong{ animation: shake .4s ease; border-color:#d9776f; background:#fbe6e4; color:#9c3a35; }
+  .quiz-opt:disabled{ cursor:default; }
+  @keyframes shake{
+    0%,100%{ transform:translateX(0); }
+    25%{ transform:translateX(-6px); }
+    75%{ transform:translateX(6px); }
+  }
+  .quiz-done{ text-align:center; padding:0.5rem 0 1rem; }
+  .quiz-done-title{
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-size:1.5rem;
+    color:var(--rose-deep);
+    margin:0 0 0.5rem;
+  }
+  .quiz-done-sub{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    color:var(--ink);
+    margin:0;
+  }
+
+  /* ---------- Closing glow ---------- */
+  .closing{ position:relative; overflow:hidden; }
+  .closing::before{
+    content:"";
+    position:absolute;
+    left:50%; top:18%;
+    width:280px; height:280px;
+    transform:translate(-50%,-50%) scale(1);
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(184,137,76,0.32), transparent 70%);
+    filter: blur(6px);
+    animation: glow-pulse 4.5s ease-in-out infinite;
+    z-index:0;
+  }
+  .closing > *{ position:relative; z-index:1; }
+  @keyframes glow-pulse{
+    0%,100%{ opacity:0.45; transform:translate(-50%,-50%) scale(1); }
+    50%{ opacity:0.85; transform:translate(-50%,-50%) scale(1.18); }
+  }
+  .closing .morning-line{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    color:var(--rose-mid);
+    font-size:1.15rem;
+    margin-bottom:1.2rem;
+  }
+
+  .meter-percent{
+    text-align:center;
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:1.6rem;
+    color:var(--rose-deep);
+    margin-top:0.8rem;
+  }
+  .meter-btn{
+    margin-top:1.6rem;
+    background:var(--rose-mid);
+    color:#fff8f6;
+    border:none;
+    padding:0.75rem 1.9rem;
+    border-radius:999px;
+    font-size:1rem;
+    cursor:pointer;
+    box-shadow:0 10px 20px var(--shadow-soft);
+    transition: transform .25s ease, background .25s ease, opacity .25s ease;
+  }
+  .meter-btn:hover:not(:disabled){ transform:translateY(-3px); background:var(--rose-deep); }
+  .meter-btn:disabled{ opacity:0.65; cursor:default; transform:none; }
+  .meter-msg{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    color:var(--ink);
+    min-height:1.6em;
+    margin-top:0.9rem;
+    text-align:center;
+  }
+
+  a, button{ font-family:inherit; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+
+  /* ---------- Lock screen ---------- */
+  .lock-screen{
+    position:fixed; inset:0; z-index:9999;
+    background: linear-gradient(160deg, var(--rose-deep), var(--rose-mid));
+    display:flex; align-items:center; justify-content:center;
+    padding:6vw;
+    transition: opacity .6s ease, visibility .6s ease;
+  }
+  .lock-screen.unlocked{ opacity:0; visibility:hidden; pointer-events:none; }
+  .lock-card{
+    background:var(--paper);
+    border-radius:20px;
+    padding:2.8rem 2.2rem;
+    max-width:360px; width:100%;
+    text-align:center;
+    box-shadow:0 24px 60px rgba(0,0,0,0.35);
+  }
+  .lock-icon{ font-size:2.4rem; margin-bottom:0.8rem; }
+  .lock-card h2{
+    font-family:'Playfair Display', serif; font-weight:600;
+    font-size:1.45rem; color:var(--rose-deep); margin:0 0 0.4rem;
+  }
+  .lock-card p{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    color:var(--ink); margin:0 0 1.5rem; font-size:1.05rem;
+  }
+  #lockInput{
+    width:100%; padding:0.85rem 1rem; border-radius:999px;
+    border:1.5px solid var(--pink-soft); font-size:1rem; text-align:center;
+    margin-bottom:1rem; font-family:'Poppins', sans-serif; color:var(--ink);
+    background:var(--blush);
+  }
+  #lockInput:focus{ outline:none; border-color:var(--rose-mid); }
+  .lock-card button{
+    background:var(--rose-mid); color:#fff8f6; border:none;
+    padding:0.8rem 1.9rem; border-radius:999px; cursor:pointer;
+    font-size:1rem; transition: transform .25s ease, background .25s ease;
+  }
+  .lock-card button:hover{ background:var(--rose-deep); transform:translateY(-2px); }
+  .lock-error{
+    color:#d9534f !important; font-size:0.9rem; margin:0.9rem 0 0 !important;
+    font-family:'Poppins', sans-serif !important; font-style:normal !important;
+    animation: shake .4s ease;
+  }
+
+  /* ---------- Confetti (falls on unlock) ---------- */
+  .confetti-piece{
+    position:fixed; top:-20px; z-index:9998;
+    border-radius:2px; opacity:0.95;
+    animation: confetti-fall linear forwards;
+    pointer-events:none;
+  }
+  @keyframes confetti-fall{
+    0%{ transform:translateY(0) rotate(0deg); opacity:1; }
+    100%{ transform:translateY(112vh) rotate(400deg); opacity:0.85; }
+  }
+
+  /* ---------- Promise cards ---------- */
+  .promise-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:1rem;
+    max-width:560px; margin:0 auto;
+  }
+  .promise-card{ perspective:1200px; height:150px; cursor:pointer; outline:none; }
+  .promise-inner{
+    position:relative; width:100%; height:100%;
+    transform-style:preserve-3d;
+    transition: transform .6s cubic-bezier(.3,.7,.3,1);
+  }
+  .promise-card.flipped .promise-inner{ transform:rotateY(180deg); }
+  .promise-front, .promise-back{
+    position:absolute; inset:0;
+    backface-visibility:hidden;
+    border-radius:14px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:1rem;
+    box-shadow:0 10px 22px var(--shadow-soft);
+  }
+  .promise-front{
+    background:var(--paper);
+    border:1.5px solid var(--pink-soft);
+  }
+  .promise-front span{ font-size:1.7rem; margin-bottom:0.4rem; }
+  .promise-front p{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    color:var(--rose-deep); font-size:1.05rem; text-align:center; margin:0;
+  }
+  .promise-back{
+    background: linear-gradient(160deg, var(--rose-mid), var(--rose-deep));
+    transform:rotateY(180deg);
+  }
+  .promise-back p{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    color:#fff5f2; font-size:1rem; line-height:1.5; text-align:center; margin:0;
+  }
+
+  /* ---------- Confession ---------- */
+  .confess-btn{
+    background:transparent; border:1.5px solid var(--rose-mid); color:var(--rose-deep);
+    padding:0.75rem 1.8rem; border-radius:999px; font-size:0.95rem; cursor:pointer;
+    transition: all .25s ease;
+  }
+  .confess-btn:hover{ background:var(--rose-mid); color:#fff; transform:translateY(-2px); }
+  .confess-text{
+    max-width:480px; margin:1.6rem auto 0;
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size:1.15rem; line-height:1.7; color:var(--ink);
+    min-height:1.6em;
+  }
+  .confess-text .cursor{
+    display:inline-block; width:2px; background:var(--rose-mid);
+    animation: blink 0.8s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(26px);
+    transition: opacity .8s ease, transform .8s ease;
+  }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  /* ---------- Mood check-in ---------- */
+  .mood-buttons{ display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; }
+  .mood-btn{
+    background:var(--paper); border:1.5px solid var(--pink-soft);
+    padding:0.7rem 1.3rem; border-radius:999px; font-size:0.95rem;
+    cursor:pointer; transition: all .25s ease; font-family:'Poppins', sans-serif;
+    color:var(--ink);
+  }
+  .mood-btn:hover{ border-color:var(--rose-mid); transform:translateY(-2px); }
+  .mood-btn.active{ background:var(--rose-mid); color:#fff; border-color:var(--rose-mid); }
+  .mood-response{
+    text-align:center; font-family:'Cormorant Garamond', serif; font-style:italic;
+    color:var(--ink); margin-top:1.4rem; min-height:1.6em; font-size:1.15rem;
+    opacity:0; transition:opacity .5s ease;
+  }
+  .mood-response.show{ opacity:1; }
+
+  /* ---------- Distance meter ---------- */
+  .distance-track{
+    position:relative; display:flex; align-items:center; justify-content:space-between;
+    max-width:300px; margin:0 auto 1.2rem; height:40px;
+  }
+  .distance-heart{ font-size:1.6rem; z-index:1; }
+  .distance-line{
+    position:absolute; left:26px; right:26px; top:50%; transform:translateY(-50%);
+    width:calc(100% - 52px); height:20px;
+  }
+  .travel-heart{
+    position:absolute; top:50%; left:26px; transform:translate(-50%,-50%);
+    font-size:1.05rem; animation: travel 3.4s ease-in-out infinite;
+  }
+  @keyframes travel{
+    0%{ left:26px; opacity:0.4; }
+    50%{ left:calc(100% - 26px); opacity:1; }
+    100%{ left:26px; opacity:0.4; }
+  }
+  .distance-caption{
+    text-align:center; font-family:'Cormorant Garamond', serif; font-style:italic;
+    color:var(--ink); font-size:1.05rem; margin:0;
+  }
+
+  /* ---------- Secret notes stack ---------- */
+  .secret-stack{ position:relative; max-width:400px; margin:0 auto 1.5rem; height:140px; }
+  .secret-card{
+    position:absolute; inset:0; background:var(--paper); border-radius:14px;
+    border:1.5px solid var(--pink-soft); box-shadow:0 12px 26px var(--shadow-soft);
+    display:flex; align-items:center; justify-content:center; padding:1.4rem;
+    text-align:center; transition: transform .45s ease, opacity .45s ease;
+  }
+  .secret-card p{
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size:1.15rem; color:var(--ink); margin:0;
+  }
+  .secret-card.flip-out{ transform:translateY(-14px) rotate(-3deg); opacity:0; }
+  .secret-btn{
+    display:block; margin:0 auto; background:var(--rose-mid); color:#fff8f6;
+    border:none; padding:0.75rem 1.8rem; border-radius:999px; cursor:pointer;
+    font-size:0.95rem; transition: all .25s ease;
+  }
+  .secret-btn:hover{ background:var(--rose-deep); transform:translateY(-2px); }
+
+  /* ---------- Voice note ---------- */
+  .voice-player{
+    display:flex; align-items:center; gap:0.9rem; max-width:320px; margin:0 auto;
+    background:var(--paper); border-radius:999px; padding:0.7rem 1.2rem;
+    box-shadow:0 10px 22px var(--shadow-soft);
+  }
+  .voice-play{
+    width:38px; height:38px; border-radius:50%; border:none; background:var(--rose-mid);
+    color:#fff; font-size:0.9rem; cursor:pointer; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; transition: background .25s ease;
+  }
+  .voice-play:hover{ background:var(--rose-deep); }
+  .voice-wave{ display:flex; align-items:center; gap:3px; flex:1; height:22px; justify-content:center; }
+  .voice-wave span{
+    width:3px; background:var(--pink-soft); border-radius:2px; height:40%;
+    transition: background .3s ease; transform-origin:center;
+  }
+  .voice-wave.playing span{ background:var(--rose-mid); animation: wave-bounce 0.9s ease-in-out infinite; }
+  .voice-wave.playing span:nth-child(1){ animation-delay:0s; }
+  .voice-wave.playing span:nth-child(2){ animation-delay:0.1s; }
+  .voice-wave.playing span:nth-child(3){ animation-delay:0.2s; }
+  .voice-wave.playing span:nth-child(4){ animation-delay:0.3s; }
+  .voice-wave.playing span:nth-child(5){ animation-delay:0.2s; }
+  .voice-wave.playing span:nth-child(6){ animation-delay:0.1s; }
+  .voice-wave.playing span:nth-child(7){ animation-delay:0s; }
+  @keyframes wave-bounce{ 0%,100%{ transform:scaleY(0.4); } 50%{ transform:scaleY(1.3); } }
+  .voice-time{ font-family:'Poppins', sans-serif; font-size:0.82rem; color:var(--ink); flex-shrink:0; }
+  .voice-hint{
+    font-family:'Cormorant Garamond', serif; font-style:italic; color:var(--ink);
+    opacity:0.75; font-size:0.92rem; margin-top:1.1rem; text-align:center;
+  }
+
+  /* ---------- Progress bar ---------- */
+  .progress-wrap{
+    position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom, 0px));
+    transform:translateX(-50%); width:min(300px, 82vw); height:32px;
+    background:var(--paper); border-radius:999px; box-shadow:0 10px 24px var(--shadow-soft);
+    z-index:50; overflow:hidden; display:flex; align-items:center;
+  }
+  .progress-fill{
+    position:absolute; left:0; top:0; bottom:0; width:0%;
+    background:linear-gradient(90deg, var(--rose-mid), var(--gold));
+    transition:width .6s ease; border-radius:999px;
+  }
+  .progress-label{
+    position:relative; z-index:1; width:100%; text-align:center;
+    font-family:'Poppins', sans-serif; font-size:0.75rem; color:var(--ink); font-weight:500;
+  }
+
+  /* ---------- Final surprise ---------- */
+  .final-surprise-card{
+    max-width:480px; margin:0 auto;
+    background:linear-gradient(160deg, var(--rose-mid), var(--rose-deep));
+    border-radius:16px; padding:2rem 1.8rem; box-shadow:0 18px 40px var(--shadow-soft);
+  }
+  .final-surprise-card p{
+    font-family:'Cormorant Garamond', serif; font-style:italic; color:#fff5f2;
+    font-size:1.2rem; line-height:1.7; margin:0; text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-card">
+    <div class="lock-icon">🔒</div>
+    <h2>ye sirf tumhare liye hai</h2>
+    <p>khaas code daalo, khulne ke liye</p>
+    <input type="text" id="lockInput" placeholder="password" autocomplete="off" />
+    <button id="lockBtn" type="button">khol do</button>
+    <p class="lock-error" id="lockError" hidden>arre nahi, phir se try karo</p>
+  </div>
+</div>
+
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<section class="hero">
+  <div class="eyebrow">a little something for</div>
+  <h1>
+    <span class="name a">Ahzaz</span>
+    <span class="amp">&amp;</span>
+    <span class="name r">Rida</span>
+  </h1>
+  <p class="tagline">jitna bhi likh loon, dil ka aadha hissa hi kaagaz par aata hai.</p>
+  <div class="scroll-cue"></div>
+</section>
+
+<section class="wrap">
+  <div class="kicker">khaali haathon nahi, khaali dil se bhi door</div>
+  <h2 class="section-title">ek khat, tumhare naam</h2>
+  <div class="envelope-stage reveal">
+    <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open the letter">
+      <div class="back"></div>
+      <div class="letter-peek"></div>
+      <div class="flap"></div>
+      <div class="seal">✧</div>
+    </div>
+    <div class="envelope-hint" id="hint">seal khol ke padho, Rida</div>
+
+    <div class="letter" id="letter">
+      <p>Rida,</p>
+      <p>Mujhe theek se yaad nahi ki tumhare baare mein sochna kab shuru hua, bas itna pata hai ki ab rukta nahi. Chhoti chhoti baatein — tumhara haske baat karne ka andaaz, gussa karne ka bhi apna hi tareeqa — sab kahin na kahin mere din ka hissa ban gayi hain.</p>
+      <p>Tumhare saath waqt seedha nahi guzarta, kahin thehar jaata hai. Aur jab tum nahi hoti, toh sabse zyada yehi mehsoos hota hai — kuch kam hai, koi awaaz gum hai.</p>
+      <p>Ye website koi bada tohfa nahi, bas ek chhota sa tareeqa hai tumhe ye dikhane ka ki tum mere liye kitni matter karti ho. Kabhi kabhi lafz kam pad jaate hain, par dil hamesha wahi kehta hai — tum ho toh sab theek hai.</p>
+      <span class="sign">hamesha tumhara, Ahzaz</span>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="kicker">apne haathon se likha hua</div>
+  <h2 class="section-title">ek chhoti si chitthi</h2>
+  <div class="note-paper reveal">
+    <div class="pin"></div>
+    <p class="hw-line">Rida,</p>
+    <p class="hw-line">tumhe pata bhi nahi hoga ki tumhari chhoti chhoti baatein mera pura din bana deti hain.</p>
+    <p class="hw-line">kabhi keh nahi paata theek se, isliye likh diya — tum meri sabse pyaari aadat ho, aur main use kabhi chhodna nahi chahta.</p>
+    <p class="hw-line sign">— Ahzaz</p>
+  </div>
+</section>
+
+<section class="wrap" style="text-align:center;">
+  <button class="surprise-btn" id="surpriseBtn" type="button">🤍 ek raaz tap karo</button>
+  <div class="surprise-card" id="surpriseCard" hidden>
+    <p>Jab bhi din mushkil lagta hai, tumhara khayal aa jaata hai aur sab thoda halka lagne lagta hai. Bas itna jaan lo — tum meri sabse pyaari sochon mein rehti ho.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="kicker">abhi kaisa feel ho raha hai</div>
+  <h2 class="section-title">apna mood batao</h2>
+  <div class="mood-buttons reveal">
+    <button class="mood-btn" type="button" data-mood="happy">😊 khush</button>
+    <button class="mood-btn" type="button" data-mood="sad">😔 udaas</button>
+    <button class="mood-btn" type="button" data-mood="angry">😠 gussa</button>
+  </div>
+  <p class="mood-response" id="moodResponse"></p>
+</section>
+
+<section class="wrap">
+  <div class="kicker">chhota sa test</div>
+  <h2 class="section-title">kitna jaanti ho Ahzaz ko?</h2>
+  <div class="quiz reveal" id="quiz">
+    <div class="quiz-q" data-index="0">
+      <p class="quiz-question">Ahzaz ka favourite color kya hai?</p>
+      <div class="quiz-options">
+        <button class="quiz-opt" type="button" data-correct="false">Blue</button>
+        <button class="quiz-opt" type="button" data-correct="true">Red</button>
+        <button class="quiz-opt" type="button" data-correct="false">Black</button>
+        <button class="quiz-opt" type="button" data-correct="false">Green</button>
+      </div>
+    </div>
+    <div class="quiz-q" data-index="1" hidden>
+      <p class="quiz-question">Khane mein sabse zyada kya pasand hai?</p>
+      <div class="quiz-options">
+        <button class="quiz-opt" type="button" data-correct="false">Pizza</button>
+        <button class="quiz-opt" type="button" data-correct="true">Biryani</button>
+        <button class="quiz-opt" type="button" data-correct="false">Burger</button>
+        <button class="quiz-opt" type="button" data-correct="false">Pasta</button>
+      </div>
+    </div>
+    <div class="quiz-q" data-index="2" hidden>
+      <p class="quiz-question">Ahzaz sabse zyada khush kab hota hai?</p>
+      <div class="quiz-options">
+        <button class="quiz-opt" type="button" data-correct="false">Jab match jeete</button>
+        <button class="quiz-opt" type="button" data-correct="true">Jab Rida paas ho</button>
+        <button class="quiz-opt" type="button" data-correct="false">Jab chutti ho</button>
+        <button class="quiz-opt" type="button" data-correct="false">Jab khaana mile</button>
+      </div>
+    </div>
+    <div class="quiz-done" id="quizDone" hidden>
+      <p class="quiz-done-title">3/3 — tumne toh dil se jaana hai</p>
+      <p class="quiz-done-sub">jaisa sochti ho, waisa hi hoon main.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="kicker">card ko tap karo</div>
+  <h2 class="section-title">kuch waade, tumhare naam</h2>
+  <div class="promise-grid reveal">
+    <div class="promise-card" tabindex="0">
+      <div class="promise-inner">
+        <div class="promise-front"><span>🤍</span><p>hamesha sununga</p></div>
+        <div class="promise-back"><p>Baat chhoti ho ya badi, main hamesha tumhari baat dhyaan se sununga.</p></div>
+      </div>
+    </div>
+    <div class="promise-card" tabindex="0">
+      <div class="promise-inner">
+        <div class="promise-front"><span>🫶</span><p>akela nahi chhodunga</p></div>
+        <div class="promise-back"><p>Mushkil waqt mein sabse pehle main tumhare saath khada milunga.</p></div>
+      </div>
+    </div>
+    <div class="promise-card" tabindex="0">
+      <div class="promise-inner">
+        <div class="promise-front"><span>😊</span><p>hasaate rahunga</p></div>
+        <div class="promise-back"><p>Koshish karunga ki tumhare chehre ki muskaan kabhi kam na ho.</p></div>
+      </div>
+    </div>
+    <div class="promise-card" tabindex="0">
+      <div class="promise-inner">
+        <div class="promise-front"><span>👂</span><p>samajhne ki koshish</p></div>
+        <div class="promise-back"><p>Galat samajhne se pehle, tumhe samajhne ki poori koshish karunga.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="section-title">kuch wajahein, tumse pyaar karne ki</h2>
+  <ul class="reasons reveal">
+    <li><span class="mark">✦</span><p>Tumhara has-has ke baat karna, jaise sabse mushkil din bhi thoda halka ho jaata hai.</p></li>
+    <li><span class="mark">✦</span><p>Chhoti chhoti baatein itni dhyaan se sunti ho, jaise sach mein matter karti hain — aur karti bhi hain.</p></li>
+    <li><span class="mark">✦</span><p>Jab gussa karti ho, tab bhi utni hi pyaari lagti ho jitna waise.</p></li>
+    <li><span class="mark">✦</span><p>Tumhare saath rehna kabhi mushkil nahi lagta, chahe din kaisa bhi ho.</p></li>
+    <li><span class="mark">✦</span><p>Tum jaisi ho, bas waisi hi rehna — mujhe wahi sabse zyada pasand hai.</p></li>
+  </ul>
+</section>
+
+<section class="wrap" style="text-align:center;">
+  <div class="kicker">kuch keh nahi paaya abhi tak</div>
+  <button class="confess-btn" id="confessBtn" type="button">yahan tap karo</button>
+  <p class="confess-text" id="confessText"></p>
+</section>
+
+<section class="wrap reveal" id="distanceSection">
+  <div class="kicker">chahe kitni bhi duri ho</div>
+  <h2 class="section-title">dil paas hi rehta hai</h2>
+  <div class="distance-track">
+    <span class="distance-heart">🫶</span>
+    <svg class="distance-line" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="10" y1="10" x2="290" y2="10" stroke="#F0A9B6" stroke-width="2" stroke-dasharray="6 6"/>
+    </svg>
+    <span class="distance-heart">❤️</span>
+    <span class="travel-heart">💗</span>
+  </div>
+  <p class="distance-caption">faasla jitna bhi ho, ye dooriyan kam nahi kar sakti.</p>
+</section>
+
+<section class="wrap">
+  <div class="kicker">chhupe hue khat</div>
+  <h2 class="section-title">gupt daraz</h2>
+  <div class="secret-stack reveal">
+    <div class="secret-card" id="secretCard">
+      <p id="secretText">tap karke pehla khat kholo</p>
+    </div>
+  </div>
+  <button class="secret-btn" id="secretBtn" type="button">agla khat kholo</button>
+</section>
+
+<section class="wrap" style="text-align:center;">
+  <div class="kicker">meri awaaz mein</div>
+  <h2 class="section-title">ek chhota voice note</h2>
+  <div class="voice-player reveal" id="voicePlayer">
+    <button class="voice-play" id="voicePlayBtn" type="button" aria-label="Play voice note">▶</button>
+    <div class="voice-wave" id="voiceWave">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <span class="voice-time" id="voiceTime">0:07</span>
+  </div>
+  <p class="voice-hint">(abhi ye ek preview hai — apni asli awaaz record karke bhejo, main isme laga dunga)</p>
+</section>
+
+<section class="wrap">
+  <div class="kicker">thoda mazaak, thoda sach</div>
+  <h2 class="section-title">pyaar ka meter</h2>
+  <div class="meter-heart-wrap reveal">
+    <svg viewBox="0 0 100 90" class="meter-svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="fillGrad" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" style="stop-color:#7A1B33"/>
+          <stop offset="100%" style="stop-color:#C43C56"/>
+        </linearGradient>
+        <clipPath id="heartClipPath">
+          <path d="M50,86 C22,64 2,45 2,25 C2,6 20,-3 35,11 C42,18 50,29 50,29 C50,29 58,18 65,11 C80,-3 98,6 98,25 C98,45 78,64 50,86 Z"/>
+        </clipPath>
+      </defs>
+      <path class="heart-outline" d="M50,86 C22,64 2,45 2,25 C2,6 20,-3 35,11 C42,18 50,29 50,29 C50,29 58,18 65,11 C80,-3 98,6 98,25 C98,45 78,64 50,86 Z"/>
+      <g clip-path="url(#heartClipPath)">
+        <rect id="heartFill" class="heart-fill" x="0" y="90" width="100" height="0" style="fill:url(#fillGrad)"></rect>
+      </g>
+    </svg>
+  </div>
+  <div class="meter-percent" id="meterPercent">0%</div>
+  <div style="text-align:center;">
+    <button class="meter-btn" id="meterBtn" type="button">sach mein pata karo</button>
+    <p class="meter-msg" id="meterMsg">&nbsp;</p>
+  </div>
+</section>
+
+<section class="wrap" id="finalSurpriseSection" hidden>
+  <div class="kicker">sab raaz khul gaye</div>
+  <h2 class="section-title">ek aakhri baat</h2>
+  <div class="final-surprise-card">
+    <p>Tumne itna sab dhoondh liya — matlab tum sach mein utna hi jaanti ho jitna main sochta tha. Bas itna keh dena chahta tha: I love you, Rida. Hamesha.</p>
+  </div>
+</section>
+
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  <span class="progress-label" id="progressLabel">0/9 raaz khule</span>
+</div>
+
+<section class="closing">
+  <p class="morning-line">aaj ki subah thodi khaas ho gayi, sirf isliye ki ye tumhare liye banaya</p>
+  <svg class="heart-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 21s-7.5-4.6-10.2-9.1C.2 9.1 1.2 5.6 4.4 4.5c2-.7 4 .1 5.1 1.8.4.6.9 1.4 1 1.9.1-.5.6-1.3 1-1.9 1.1-1.7 3.1-2.5 5.1-1.8 3.2 1.1 4.2 4.6 2.6 7.4C19.5 16.4 12 21 12 21z"/>
+  </svg>
+  <blockquote>tum meri sabse pyaari aadat ho, Rida.</blockquote>
+  <div class="from">— Ahzaz</div>
+</section>
+
+<script>
+  // progress tracker — counts explored surprises, reveals a final message at 100%
+  var LoveProgress = (function(){
+    var total = 9;
+    var doneSet = new Set();
+    var fillEl, labelEl;
+    function init(){
+      fillEl = document.getElementById('progressFill');
+      labelEl = document.getElementById('progressLabel');
+    }
+    function mark(key){
+      if(doneSet.has(key)) return;
+      doneSet.add(key);
+      update();
+    }
+    function update(){
+      if(!fillEl) init();
+      if(!fillEl) return;
+      var pct = Math.round((doneSet.size / total) * 100);
+      fillEl.style.width = pct + '%';
+      labelEl.textContent = doneSet.size + '/' + total + ' raaz khule';
+      if(doneSet.size >= total){
+        revealFinal();
+      }
+    }
+    function revealFinal(){
+      var sec = document.getElementById('finalSurpriseSection');
+      if(sec && sec.hidden){
+        sec.hidden = false;
+        sec.classList.add('reveal');
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){ sec.classList.add('in-view'); });
+        });
+        if(typeof spawnFallingConfetti === 'function') spawnFallingConfetti();
+        setTimeout(function(){
+          sec.scrollIntoView({ behavior:'smooth', block:'center' });
+        }, 300);
+      }
+    }
+    return { mark: mark };
+  })();
+
+  // ambient floating hearts
+  (function(){
+    var wrap = document.getElementById('petals');
+    var n = window.innerWidth < 500 ? 14 : 22;
+    for(var i=0;i<n;i++){
+      var p = document.createElement('div');
+      p.className = 'petal';
+      var left = Math.random()*100;
+      var dur = 9 + Math.random()*9;
+      var delay = Math.random()*12;
+      var drift = (Math.random()*80 - 40) + 'px';
+      var size = 10 + Math.random()*14;
+      p.style.left = left + 'vw';
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.animationDuration = dur + 's';
+      p.style.animationDelay = delay + 's';
+      p.style.setProperty('--drift', drift);
+      var pink = Math.random() > 0.5;
+      p.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (pink ? '#C43C56' : '#B8894C') + '"><path d="M12 21s-7.5-4.6-10.2-9.1C.2 9.1 1.2 5.6 4.4 4.5c2-.7 4 .1 5.1 1.8.4.6.9 1.4 1 1.9.1-.5.6-1.3 1-1.9 1.1-1.7 3.1-2.5 5.1-1.8 3.2 1.1 4.2 4.6 2.6 7.4C19.5 16.4 12 21 12 21z"/></svg>';
+      wrap.appendChild(p);
+    }
+  })();
+
+  // envelope open interaction
+  (function(){
+    var env = document.getElementById('envelope');
+    var letter = document.getElementById('letter');
+    var hint = document.getElementById('hint');
+    var opened = false;
+    function openEnvelope(){
+      if(opened) return;
+      opened = true;
+      env.classList.add('open');
+      setTimeout(function(){
+        letter.classList.add('show');
+      }, 350);
+      hint.style.opacity = '0';
+      setTimeout(function(){ hint.style.display='none'; }, 400);
+      LoveProgress.mark('letter');
+    }
+    env.addEventListener('click', openEnvelope);
+    env.addEventListener('keypress', function(e){
+      if(e.key === 'Enter' || e.key === ' ') openEnvelope();
+    });
+  })();
+
+  // love meter — always lands on 100%, with a flicker-count animation
+  (function(){
+    var btn = document.getElementById('meterBtn');
+    var fill = document.getElementById('heartFill');
+    var percentLabel = document.getElementById('meterPercent');
+    var msg = document.getElementById('meterMsg');
+    if(!btn || !fill) return;
+
+    var endMessages = [
+      'kam ho hi nahi sakta',
+      'jitni baar naapo, itna hi nikalega',
+      'ye number kabhi ghatega nahi'
+    ];
+
+    function setMeter(percent){
+      var h = (percent / 100) * 90;
+      var y = 90 - h;
+      fill.setAttribute('y', y);
+      fill.setAttribute('height', h);
+      percentLabel.textContent = percent + '%';
+    }
+
+    function spawnBurst(){
+      var wrap = document.getElementById('petals');
+      if(!wrap) return;
+      for(var i=0;i<16;i++){
+        var p = document.createElement('div');
+        p.className = 'petal';
+        var left = 50 + (Math.random()*30 - 15);
+        p.style.left = left + 'vw';
+        p.style.bottom = '28vh';
+        var size = 10 + Math.random()*10;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.animationDuration = (2.2 + Math.random()*1.4) + 's';
+        p.style.animationDelay = (Math.random()*0.3) + 's';
+        p.style.setProperty('--drift', (Math.random()*140 - 70) + 'px');
+        p.innerHTML = '<svg viewBox="0 0 24 24" fill="#C43C56"><path d="M12 21s-7.5-4.6-10.2-9.1C.2 9.1 1.2 5.6 4.4 4.5c2-.7 4 .1 5.1 1.8.4.6.9 1.4 1 1.9.1-.5.6-1.3 1-1.9 1.1-1.7 3.1-2.5 5.1-1.8 3.2 1.1 4.2 4.6 2.6 7.4C19.5 16.4 12 21 12 21z"/></svg>';
+        wrap.appendChild(p);
+        (function(el){ setTimeout(function(){ el.remove(); }, 4200); })(p);
+      }
+    }
+
+    var running = false;
+    function runMeter(){
+      if(running) return;
+      running = true;
+      btn.disabled = true;
+      msg.textContent = 'naap rahe hain...';
+      var t0 = null;
+      var duration = 1500;
+      function tick(ts){
+        if(!t0) t0 = ts;
+        var elapsed = ts - t0;
+        var progress = Math.min(elapsed / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.round(eased * 100);
+        setMeter(current);
+        if(progress < 1){
+          requestAnimationFrame(tick);
+        } else {
+          setMeter(100);
+          msg.textContent = endMessages[Math.floor(Math.random()*endMessages.length)];
+          spawnBurst();
+          btn.disabled = false;
+          btn.textContent = 'phir se naapo';
+          running = false;
+          LoveProgress.mark('meter');
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    btn.addEventListener('click', runMeter);
+  })();
+
+  // surprise tap reveal
+  (function(){
+    var btn = document.getElementById('surpriseBtn');
+    var card = document.getElementById('surpriseCard');
+    if(!btn || !card) return;
+    btn.addEventListener('click', function(){
+      card.hidden = false;
+      btn.style.display = 'none';
+    });
+  })();
+
+  // quiz
+  (function(){
+    var quiz = document.getElementById('quiz');
+    if(!quiz) return;
+    var questions = Array.prototype.slice.call(quiz.querySelectorAll('.quiz-q'));
+    var done = document.getElementById('quizDone');
+    var current = 0;
+
+    questions.forEach(function(q){
+      var opts = q.querySelectorAll('.quiz-opt');
+      opts.forEach(function(opt){
+        opt.addEventListener('click', function(){
+          if(opt.dataset.correct === 'true'){
+            opts.forEach(function(o){ o.disabled = true; });
+            opt.classList.add('correct');
+            setTimeout(function(){
+              q.hidden = true;
+              current++;
+              if(current < questions.length){
+                questions[current].hidden = false;
+              } else if(done){
+                done.hidden = false;
+                LoveProgress.mark('quiz');
+              }
+            }, 650);
+          } else {
+            opt.classList.add('wrong');
+            setTimeout(function(){ opt.classList.remove('wrong'); }, 450);
+          }
+        });
+      });
+    });
+  })();
+
+  // falling confetti — used right after the lock screen opens
+  function spawnFallingConfetti(){
+    var colors = ['#C43C56', '#7A1B33', '#B8894C', '#F0A9B6'];
+    var count = window.innerWidth < 500 ? 26 : 42;
+    for(var i=0;i<count;i++){
+      var c = document.createElement('div');
+      c.className = 'confetti-piece';
+      var w = 6 + Math.random()*6;
+      var h = w * (1.3 + Math.random()*0.6);
+      c.style.left = (Math.random()*100) + 'vw';
+      c.style.width = w + 'px';
+      c.style.height = h + 'px';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration = (2.6 + Math.random()*1.8) + 's';
+      c.style.animationDelay = (Math.random()*0.6) + 's';
+      document.body.appendChild(c);
+      (function(el){ setTimeout(function(){ el.remove(); }, 5200); })(c);
+    }
+  }
+
+  // lock screen
+  (function(){
+    var screen = document.getElementById('lockScreen');
+    var input = document.getElementById('lockInput');
+    var btn = document.getElementById('lockBtn');
+    var error = document.getElementById('lockError');
+    if(!screen || !input || !btn) return;
+
+    // change this word to whatever code you'd like Rida to enter
+    var PASSWORD = 'rida';
+
+    function tryUnlock(){
+      var val = input.value.trim().toLowerCase();
+      if(val === PASSWORD){
+        screen.classList.add('unlocked');
+        spawnFallingConfetti();
+        document.body.style.overflow = '';
+      } else {
+        error.hidden = false;
+        input.value = '';
+        input.focus();
+        setTimeout(function(){ error.hidden = true; }, 1800);
+      }
+    }
+    btn.addEventListener('click', tryUnlock);
+    input.addEventListener('keypress', function(e){
+      if(e.key === 'Enter') tryUnlock();
+    });
+    setTimeout(function(){ input.focus(); }, 400);
+  })();
+
+  // promise card flip
+  (function(){
+    var cards = document.querySelectorAll('.promise-card');
+    cards.forEach(function(card){
+      function toggle(){ card.classList.toggle('flipped'); LoveProgress.mark('promise'); }
+      card.addEventListener('click', toggle);
+      card.addEventListener('keypress', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+      });
+    });
+  })();
+
+  // confession — typewriter reveal
+  (function(){
+    var btn = document.getElementById('confessBtn');
+    var text = document.getElementById('confessText');
+    if(!btn || !text) return;
+    var message = 'Sach kahoon toh, tumhare jaane ke baad bhi tumse baatein karta rehta hoon, apne khayalon mein. Kabhi kaha nahi, par tum meri sabse pyaari soch ho.';
+    var used = false;
+    btn.addEventListener('click', function(){
+      if(used) return;
+      used = true;
+      btn.style.display = 'none';
+      LoveProgress.mark('confession');
+      var i = 0;
+      text.innerHTML = '<span class="typed"></span><span class="cursor">&nbsp;</span>';
+      var typedEl = text.querySelector('.typed');
+      function typeChar(){
+        if(i < message.length){
+          typedEl.textContent += message.charAt(i);
+          i++;
+          setTimeout(typeChar, 28);
+        } else {
+          var cursor = text.querySelector('.cursor');
+          if(cursor) cursor.remove();
+        }
+      }
+      typeChar();
+    });
+  })();
+
+  // mood check-in
+  (function(){
+    var buttons = document.querySelectorAll('.mood-btn');
+    var response = document.getElementById('moodResponse');
+    if(!buttons.length || !response) return;
+    var replies = {
+      happy: 'Yehi dekhna chahta hoon hamesha — tumhari muskaan sabse pyaari cheez hai mere liye.',
+      sad: 'Agar udaas ho, toh bas itna yaad rakhna — main hoon na, sab theek ho jayega.',
+      angry: 'Gussa bhi utna hi pyaara lagta hai jitna tumhara hasna. Thoda time lo, phir baat karte hain.'
+    };
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        buttons.forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        response.classList.remove('show');
+        setTimeout(function(){
+          response.textContent = replies[btn.dataset.mood] || '';
+          response.classList.add('show');
+        }, 150);
+        LoveProgress.mark('mood');
+      });
+    });
+  })();
+
+  // secret notes stack
+  (function(){
+    var card = document.getElementById('secretCard');
+    var text = document.getElementById('secretText');
+    var btn = document.getElementById('secretBtn');
+    if(!card || !text || !btn) return;
+    var notes = [
+      'Tumhare bina chai bhi adhoori lagti hai.',
+      'Kal raat phir se tumhare baare mein sochte sochte so gaya.',
+      'Tumhara naam sunte hi chehre pe muskaan aa jaati hai.',
+      'Kabhi kabhi lagta hai duniya itni buri nahi, kyunki tum ho.',
+      'Tumhare saath ki chhoti si baat bhi din bana deti hai.'
+    ];
+    var idx = -1;
+    btn.addEventListener('click', function(){
+      card.classList.add('flip-out');
+      setTimeout(function(){
+        idx = (idx + 1) % notes.length;
+        text.textContent = notes[idx];
+        card.classList.remove('flip-out');
+      }, 300);
+      btn.textContent = 'agla khat kholo';
+      LoveProgress.mark('secret');
+    });
+  })();
+
+  // voice note (visual preview — attach a real recording to make it play)
+  (function(){
+    var playBtn = document.getElementById('voicePlayBtn');
+    var wave = document.getElementById('voiceWave');
+    var time = document.getElementById('voiceTime');
+    if(!playBtn || !wave) return;
+    var playing = false;
+    var timer = null;
+    playBtn.addEventListener('click', function(){
+      if(playing){
+        playing = false;
+        wave.classList.remove('playing');
+        playBtn.textContent = '▶';
+        clearTimeout(timer);
+        return;
+      }
+      playing = true;
+      wave.classList.add('playing');
+      playBtn.textContent = '❚❚';
+      LoveProgress.mark('voice');
+      timer = setTimeout(function(){
+        playing = false;
+        wave.classList.remove('playing');
+        playBtn.textContent = '▶';
+      }, 7000);
+    });
+  })();
+
+  // distance meter — mark progress once it's been seen
+  (function(){
+    var sec = document.getElementById('distanceSection');
+    if(!sec || !('IntersectionObserver' in window)){
+      LoveProgress.mark('distance');
+      return;
+    }
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          LoveProgress.mark('distance');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    obs.observe(sec);
+  })();
+
+  // scroll reveal
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+    if(!items.length) return;
+    if(!('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('in-view'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    items.forEach(function(el){ observer.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
